@@ -1,4 +1,4 @@
-package com.brickrey.yugiohcard.view;
+package com.brickrey.yugiohcard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
