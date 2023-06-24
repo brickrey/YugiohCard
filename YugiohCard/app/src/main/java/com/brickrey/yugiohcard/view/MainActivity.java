@@ -1,8 +1,10 @@
-package com.brickrey.yugiohcard;
+package com.brickrey.yugiohcard.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.brickrey.yugiohcard.R;
 
 public class MainActivity extends AppCompatActivity {
 
