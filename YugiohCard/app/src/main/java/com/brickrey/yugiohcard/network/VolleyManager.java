@@ -1,5 +1,6 @@
 package com.brickrey.yugiohcard.network;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -17,8 +18,10 @@ public class VolleyManager {
 
     public final static String VOLLEY_REQUESTS_TAG = VolleyManager.class.getCanonicalName();
 
+    @SuppressLint("StaticFieldLeak")
     private static VolleyManager singleton;
     private RequestQueue requestQueue;
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
 
     private VolleyManager(Context context){

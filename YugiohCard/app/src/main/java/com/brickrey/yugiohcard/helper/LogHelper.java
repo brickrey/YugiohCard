@@ -21,8 +21,8 @@ public class LogHelper {
      * @param logToFile whenever this parameter has a true value the log is appended to taxinetDriverApp.log file.
      */
     public static void log(String tag, String message, int logLevel, Context context, boolean logToFile){
-        if(logToFile && (SharedPreferenceManager.isLogToFileActivated(context))){// || BuildConfig.DEBUG == 3)) {
-            FileHelper.appendLineToFile((new Date()).toString() + (logLevel == 3 ? "[ERROR]: " : logLevel == 2 ? "[WARN]: " : "[INFO]: ") + tag + " - " + message, LogFileName, context);
+        if(logToFile && (SharedPreferenceManager.isLogToFileActivated(context))){
+            FileHelper.appendLineToFile((new Date()).toString() + (logLevel == 3 ? "[ERROR]: " : logLevel == 2 ? "[WARN]: " : "[INFO]: ") + tag + " - " + message, LogFileName);
         }
         if(logLevel == 3)  Log.e(tag, message);
         else Log.i(tag, message);
