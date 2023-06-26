@@ -1,9 +1,12 @@
 package com.brickrey.yugiohcard.bo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CardImageBO implements Comparable{
+public class CardImageBO implements Comparable, Parcelable {
 
     private int id;
     private String image_url;
@@ -26,6 +29,38 @@ public class CardImageBO implements Comparable{
             if(jsonObject.has(JSON_Image_Url_Crop)) image_url_cropped = jsonObject.getString(JSON_Image_Url_Crop);
         }
     }
+
+    protected CardImageBO(Parcel in) {
+        id = in.readInt();
+        image_url = in.readString();
+        image_url_small = in.readString();
+        image_url_cropped = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(image_url);
+        dest.writeString(image_url_small);
+        dest.writeString(image_url_cropped);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<CardImageBO> CREATOR = new Creator<CardImageBO>() {
+        @Override
+        public CardImageBO createFromParcel(Parcel in) {
+            return new CardImageBO(in);
+        }
+
+        @Override
+        public CardImageBO[] newArray(int size) {
+            return new CardImageBO[size];
+        }
+    };
 
     public int getId() {
         return id;

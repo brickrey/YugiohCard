@@ -58,14 +58,11 @@ public class CardInfoApiService {
         return list;
     }
 
-    public static boolean searchCard(String searchText, int rows, int offset, final Context context, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener){
+    public static boolean searchCard(String searchText, String filter, int rows, int offset, final Context context, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener){
         String url = NetworkConstants.WS_END_POINT_URL + NetworkConstants.OP_CARD + "?";
-        if(rows > 0){
-            url += "&num=" + rows + "&offset=" + offset;
-        }
-        if(searchText != null && searchText.length() > 0){
-            url += "&fname=" + searchText;
-        }
+        if(rows > 0) url += "&num=" + rows + "&offset=" + offset;
+        if(searchText != null && searchText.length() > 0) url += "&fname=" + searchText;
+        if(filter != null && !filter.isEmpty()) url += "&archetype=" + filter;
         // Header Parameters
         final HashMap<String, String> headerParameters = new HashMap<>();
         // Json Request

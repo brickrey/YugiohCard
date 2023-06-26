@@ -1,9 +1,12 @@
 package com.brickrey.yugiohcard.bo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CardSetBO implements Comparable{
+public class CardSetBO implements Comparable, Parcelable {
 
     private String set_name;
     private String set_code;
@@ -29,6 +32,40 @@ public class CardSetBO implements Comparable{
             if(jsonObject.has(JSON_Set_Price)) set_price = jsonObject.getString(JSON_Set_Price);
         }
     }
+
+    protected CardSetBO(Parcel in) {
+        set_name = in.readString();
+        set_code = in.readString();
+        set_rarity = in.readString();
+        set_rarity_code = in.readString();
+        set_price = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(set_name);
+        dest.writeString(set_code);
+        dest.writeString(set_rarity);
+        dest.writeString(set_rarity_code);
+        dest.writeString(set_price);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<CardSetBO> CREATOR = new Creator<CardSetBO>() {
+        @Override
+        public CardSetBO createFromParcel(Parcel in) {
+            return new CardSetBO(in);
+        }
+
+        @Override
+        public CardSetBO[] newArray(int size) {
+            return new CardSetBO[size];
+        }
+    };
 
     public String getSet_name() {
         return set_name;

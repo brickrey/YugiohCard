@@ -1,9 +1,12 @@
 package com.brickrey.yugiohcard.bo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CardBanBO implements Comparable{
+public class CardBanBO implements Comparable, Parcelable {
 
     private String ban_tcg;
     private String ban_ocg;
@@ -23,6 +26,36 @@ public class CardBanBO implements Comparable{
             if(jsonObject.has(JSON_Ban_Goat)) ban_goat = jsonObject.getString(JSON_Ban_Goat);
         }
     }
+
+    protected CardBanBO(Parcel in) {
+        ban_tcg = in.readString();
+        ban_ocg = in.readString();
+        ban_goat = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(ban_tcg);
+        dest.writeString(ban_ocg);
+        dest.writeString(ban_goat);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<CardBanBO> CREATOR = new Creator<CardBanBO>() {
+        @Override
+        public CardBanBO createFromParcel(Parcel in) {
+            return new CardBanBO(in);
+        }
+
+        @Override
+        public CardBanBO[] newArray(int size) {
+            return new CardBanBO[size];
+        }
+    };
 
     public String getBan_tcg() {
         return ban_tcg;

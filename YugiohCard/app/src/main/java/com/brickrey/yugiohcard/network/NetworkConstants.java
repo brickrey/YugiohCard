@@ -10,5 +10,5 @@ public class NetworkConstants {
 
     // Operations
     public static final String OP_CARD = "cardinfo.php";
-    public static final String OP_ARCHETYPES = "archetypes.php";;
+    public static final String OP_ARCHETYPES = "archetypes.php";
 }

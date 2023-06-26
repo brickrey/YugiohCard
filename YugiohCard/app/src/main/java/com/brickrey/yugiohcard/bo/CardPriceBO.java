@@ -1,9 +1,12 @@
 package com.brickrey.yugiohcard.bo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CardPriceBO implements Comparable {
+public class CardPriceBO implements Comparable, Parcelable {
 
     private String cardmarket_price;
     private String tcgplayer_price;
@@ -29,6 +32,40 @@ public class CardPriceBO implements Comparable {
             if(jsonObject.has(JSON_Price_CoolStuff)) coolstuffinc_price = jsonObject.getString(JSON_Price_CoolStuff);
         }
     }
+
+    protected CardPriceBO(Parcel in) {
+        cardmarket_price = in.readString();
+        tcgplayer_price = in.readString();
+        ebay_price = in.readString();
+        amazon_price = in.readString();
+        coolstuffinc_price = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(cardmarket_price);
+        dest.writeString(tcgplayer_price);
+        dest.writeString(ebay_price);
+        dest.writeString(amazon_price);
+        dest.writeString(coolstuffinc_price);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<CardPriceBO> CREATOR = new Creator<CardPriceBO>() {
+        @Override
+        public CardPriceBO createFromParcel(Parcel in) {
+            return new CardPriceBO(in);
+        }
+
+        @Override
+        public CardPriceBO[] newArray(int size) {
+            return new CardPriceBO[size];
+        }
+    };
 
     public String getCardmarket_price() {
         return cardmarket_price;

@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Yugioh Card</string>
     <string name="detected_error">Se ha detectado un problema en el aplicativo, intente más tarde.</string>
+    <string name="card_image">Card Image</string>
+    <string name="card_type_icon">Card Type Icon</string>
+    <string name="card_atk_value">Card attack value</string>
+    <string name="card_def_value">Card defense value</string>
+    <string name="item_background_image">Item Background Image</string>
+    <string name="search_empty_text">Consulta las cartas y establece la mejor estrategia para el duelo.</string>
+    <string name="archetype_filter">Archetype Filter</string>
+    <string name="archetype_filter_text">Filtro segun arquetipo</string>
 </resources>

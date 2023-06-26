@@ -1,5 +1,8 @@
 package com.brickrey.yugiohcard.bo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CardInfoBO implements Comparable{
+public class CardInfoBO implements Comparable, Parcelable {
 
     private int id;
     private String name;
@@ -20,6 +23,7 @@ public class CardInfoBO implements Comparable{
     private int level;
     private String race;
     private String attribute;
+    private String archetype;
     private CardSetBO [] card_sets;
     private CardImageBO [] card_images;
     private CardPriceBO [] card_prices;
@@ -36,6 +40,7 @@ public class CardInfoBO implements Comparable{
         level = 0;
         race = "";
         attribute = "";
+        archetype = "";
         card_sets = new CardSetBO[0];
         card_images = new CardImageBO[0];
         card_prices = new CardPriceBO[0];
@@ -55,12 +60,67 @@ public class CardInfoBO implements Comparable{
             if(jsonObject.has(JSON_Card_Level))level = jsonObject.getInt(JSON_Card_Level);
             if(jsonObject.has(JSON_Card_Race))race = jsonObject.getString(JSON_Card_Race);
             if(jsonObject.has(JSON_Card_Attribute))attribute = jsonObject.getString(JSON_Card_Attribute);
+            if(jsonObject.has(JSON_Card_Archetype))archetype = jsonObject.getString(JSON_Card_Archetype);
             if(jsonObject.has(JSON_Card_Set)) setCard_sets(jsonObject.getJSONArray(JSON_Card_Set));
             if(jsonObject.has(JSON_Card_Prices)) setCard_prices(jsonObject.getJSONArray(JSON_Card_Prices));
             if(jsonObject.has(JSON_Card_Images)) setCard_images(jsonObject.getJSONArray(JSON_Card_Images));
             if(jsonObject.has(JSON_Card_BanList)) setCard_banList(new CardBanBO(jsonObject.getJSONObject(JSON_Card_BanList)));
         }
     }
+
+    protected CardInfoBO(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        type = in.readString();
+        frameType = in.readString();
+        desc = in.readString();
+        atk = in.readInt();
+        def = in.readInt();
+        level = in.readInt();
+        race = in.readString();
+        attribute = in.readString();
+        archetype = in.readString();
+        card_sets = in.createTypedArray(CardSetBO.CREATOR);
+        card_images = in.createTypedArray(CardImageBO.CREATOR);
+        card_prices = in.createTypedArray(CardPriceBO.CREATOR);
+        card_banList = in.readParcelable(CardBanBO.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(type);
+        dest.writeString(frameType);
+        dest.writeString(desc);
+        dest.writeInt(atk);
+        dest.writeInt(def);
+        dest.writeInt(level);
+        dest.writeString(race);
+        dest.writeString(attribute);
+        dest.writeString(archetype);
+        dest.writeTypedArray(card_sets, flags);
+        dest.writeTypedArray(card_images, flags);
+        dest.writeTypedArray(card_prices, flags);
+        dest.writeParcelable(card_banList, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<CardInfoBO> CREATOR = new Creator<CardInfoBO>() {
+        @Override
+        public CardInfoBO createFromParcel(Parcel in) {
+            return new CardInfoBO(in);
+        }
+
+        @Override
+        public CardInfoBO[] newArray(int size) {
+            return new CardInfoBO[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -142,6 +202,14 @@ public class CardInfoBO implements Comparable{
         this.attribute = attribute;
     }
 
+    public String getArchetype() {
+        return archetype;
+    }
+
+    public void setArchetype(String archetype) {
+        this.archetype = archetype;
+    }
+
     public CardSetBO[] getCard_sets() {
         return card_sets;
     }
@@ -214,6 +282,7 @@ public class CardInfoBO implements Comparable{
                 ", \"level\": " + level +
                 ", \"race\": \"" + race + '\"' +
                 ", \"attribute\": \"" + attribute + '\"' +
+                ", \"archetype\": \"" + archetype + '\"' +
                 ", \"card_sets\": " + Arrays.toString(card_sets) +
                 ", \"card_images\": " + Arrays.toString(card_images) +
                 ", \"card_prices\": " + Arrays.toString(card_prices) +
@@ -236,6 +305,7 @@ public class CardInfoBO implements Comparable{
     public static String JSON_Card_Level = "level";
     public static String JSON_Card_Race = "race";
     public static String JSON_Card_Attribute = "attribute";
+    public static String JSON_Card_Archetype = "archetype";
     public static String JSON_Card_Set = "card_sets";
     public static String JSON_Card_Images = "card_images";
     public static String JSON_Card_Prices = "card_prices";

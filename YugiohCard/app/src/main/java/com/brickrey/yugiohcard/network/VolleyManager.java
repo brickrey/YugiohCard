@@ -16,7 +16,8 @@ import com.brickrey.yugiohcard.SharedPreferenceManager;
 
 public class VolleyManager {
 
-    public final static String VOLLEY_REQUESTS_TAG = VolleyManager.class.getCanonicalName();
+    public final static String TAG = VolleyManager.class.getCanonicalName();
+    public final static String VOLLEY_REQUESTS_TAG = "BRZ_YGO";
 
     @SuppressLint("StaticFieldLeak")
     private static VolleyManager singleton;
@@ -46,20 +47,13 @@ public class VolleyManager {
             requestQueue = new RequestQueue(cache, network, concurrentConnections);
             requestQueue.start();
 
-            Log.d(VolleyManager.class.getName(), requestQueue.toString());
+            Log.d(TAG, requestQueue.toString());
         }
         return requestQueue;
     }
 
     public <T> void addToRequestQueue(Request<T> req) {
         req.setTag(VOLLEY_REQUESTS_TAG);
-        req.setShouldCache(false);
-        req.setRetryPolicy(new DefaultRetryPolicy(NetworkConstants.WS_SOCKET_TIMEOUT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        getRequestQueue().add(req);
-    }
-
-    public <T> void addToRequestQueue(Request<T> req, String tag) {
-        req.setTag(tag);
         req.setShouldCache(false);
         req.setRetryPolicy(new DefaultRetryPolicy(NetworkConstants.WS_SOCKET_TIMEOUT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         getRequestQueue().add(req);
